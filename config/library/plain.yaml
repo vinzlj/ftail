@@ -1,0 +1,6 @@
+ftail:
+  reader: FTail\Reader\TailReader
+  decoder: FTail\Decoder\JsonDecoder
+  formatter: FTail\Formatter\PlainFormatter
+  exclusions: []
+  replacements: []

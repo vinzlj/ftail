@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+$autoloadPath = __DIR__ . '/../vendor/autoload.php';
+
+require_once $autoloadPath;
+
+use FTail\FTail;
+use Symfony\Component\Console\Application;
+
+$command = new FTail();
+
+$application = new Application('ftail');
+$application->add($command);
+$application->setDefaultCommand($command->getName(), true);
+$application->run();

@@ -1,0 +1,23 @@
+# - copy me to ./config/my_config.php
+# - then run `ftail -c my_config path/to/log`
+ftail:
+  reader: FTail\Reader\TailReader                        # How to read logs
+  decoder: FTail\Decoder\JsonDecoder                     # How to convert a log line into a LogRecord
+  formatter: FTail\Formatter\ColoredFormatter            # Hot to format a single line
+
+  exclusions:                                            # Lines that won't be printed if the condition is fulfilled
+    - 'log.channel === "app" and log.level.name === "debug"'
+    - 'log.message contains "Deprecated"'
+
+  replacements:                                          # Replacements in the LogRecord
+    -
+      when: 'log.message contains "Executing query"'     # Handled by FTail\Replacement\BaseReplacement
+      replaceBy: 'Executing query:'
+    -
+      type: FTail\Replacement\ColorWithRegex             # You can also create your own FTail\Replacement\Replacement
+      when: |
+          log.channel === 'request' and
+          log.message contains 'Matched route'
+      color: FTail\Formatter\Helper\Color::lightMagenta
+      regex: '/"(.*)"/'
+      replaceBy: '"$1"'
