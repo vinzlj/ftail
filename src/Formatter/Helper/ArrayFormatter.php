@@ -6,8 +6,14 @@ namespace FTail\Formatter\Helper;
 
 final class ArrayFormatter
 {
-    public static function format(array $data): string
+    public static function format(array $data, bool $pretty = false): string
     {
-        return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
+
+        if ($pretty) {
+            $flags |= JSON_PRETTY_PRINT;
+        }
+
+        return json_encode($data, $flags);
     }
 }

@@ -22,7 +22,7 @@ final class ColoredFormatter implements Formatter
         Level::EMERGENCY_VALUE => Color::RED,
     ];
 
-    public function formatLog(LogRecord $record): string
+    public function formatLog(LogRecord $record, bool $prettyPrint = false): string
     {
         return sprintf(
             "[%s] [%s.%s] %s%s%s%s%s",
@@ -31,9 +31,9 @@ final class ColoredFormatter implements Formatter
             Color::fromString(self::LEVEL_COLORS[$record->level->value])->applyTo($record->level->name),
             $record->message,
             !empty($record->context) ? PHP_EOL : '',
-            !empty($record->context) ? Color::lightBlack()->applyTo(ArrayFormatter::format($record->context)) : '',
+            !empty($record->context) ? Color::lightBlack()->applyTo(ArrayFormatter::format($record->context, $prettyPrint)) : '',
             !empty($record->extra) ? PHP_EOL : '',
-            !empty($record->extra) ? Color::lightWhite()->applyTo(ArrayFormatter::format(($record->extra))) : '',
+            !empty($record->extra) ? Color::lightWhite()->applyTo(ArrayFormatter::format($record->extra, $prettyPrint)) : '',
         );
     }
 }

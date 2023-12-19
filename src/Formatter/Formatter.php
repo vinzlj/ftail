@@ -9,5 +9,5 @@ interface Formatter
     /**
      * @info How to format the entire LogRecord
      */
-    public function formatLog(LogRecord $record): string;
+    public function formatLog(LogRecord $record, bool $prettyPrint = false): string;
 }

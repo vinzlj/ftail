@@ -44,6 +44,7 @@ final class FTail extends Command
         $this->addOption('config', 'c', InputOption::VALUE_REQUIRED, sprintf("A configuration: %s", implode(', ', $coloredConfigurations)), ConfigurationFactory::COLORED);
         $this->addOption('level', 'l', InputOption::VALUE_REQUIRED, sprintf('A minimum logging level: %s', implode(', ', $coloredLevels)), 'debug');
         $this->addOption('channel', 'cn', InputOption::VALUE_REQUIRED, sprintf('A specific logging channel, like: %s', implode(', ', $coloredChannels)));
+        $this->addOption('pretty-print', 'p', InputOption::VALUE_NONE, 'Pretty print context');
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output): void
@@ -74,9 +75,10 @@ final class FTail extends Command
         }
 
         $channel = $input->getOption('channel');
+        $prettyPrint = $input->getOption('pretty-print');
 
         $logReader = new Tailer($formatter);
-        $logReader->tail($logFilePath, Level::fromName($level), $channel);
+        $logReader->tail($logFilePath, Level::fromName($level), $channel, $prettyPrint);
 
         return self::SUCCESS;
     }

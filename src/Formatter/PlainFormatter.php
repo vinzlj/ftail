@@ -9,7 +9,7 @@ use FTail\Logs\LogRecord;
 
 final class PlainFormatter implements Formatter
 {
-    public function formatLog(LogRecord $record): string
+    public function formatLog(LogRecord $record, bool $prettyPrint = false): string
     {
         return sprintf(
             "[%s] [%s.%s] %s%s%s%s%s",

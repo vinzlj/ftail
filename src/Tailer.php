@@ -30,7 +30,7 @@ final class Tailer
         $this->expressionLanguage = new ExpressionLanguage();
     }
 
-    public function tail(string $filePath, Level $minimumLevel, ?string $channel = null): void
+    public function tail(string $filePath, Level $minimumLevel, ?string $channel = null, bool $prettyPrint = false): void
     {
         $this->reader->open($filePath);
 
@@ -62,7 +62,7 @@ final class Tailer
                 }
             }
 
-            echo sprintf("%s\n", $this->formatter->formatLog($logRecord));
+            echo sprintf("%s\n", $this->formatter->formatLog($logRecord, $prettyPrint));
         }
 
         $this->reader->close();
