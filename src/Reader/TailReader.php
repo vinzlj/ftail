@@ -11,7 +11,7 @@ final class TailReader implements Reader
 
     public function open(?string $filePath = null): void
     {
-        $this->process = popen(sprintf('tail -f %s 2>&1', $filePath), 'r');
+        $this->process = popen(sprintf('tail -n 100 -f %s 2>&1', $filePath), 'r');
     }
 
     public function hasReachedEnd(): bool
