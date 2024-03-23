@@ -35,7 +35,11 @@ final class Tailer
         $this->reader->open($filePath);
 
         while (!$this->reader->hasReachedEnd()) {
-            $logRecord = $this->decoder->decode($this->reader->readLine());
+            try {
+                $logRecord = $this->decoder->decode($this->reader->readLine());
+            } catch (\Exception $exception) {
+                continue;
+            }
 
             if ($logRecord->level->isLowerThan($minimumLevel)) {
                 continue;
